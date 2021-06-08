@@ -9,6 +9,7 @@ function getData() {
         type: "GET",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
+        error: function() {console.log("error")},
         success: function (response) {
             renderData(response)
         }
@@ -38,6 +39,7 @@ function deleteProduct(id) {
         type : "DELETE",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
+        error: function() {console.log("error")},
         success: function () {
             getData();
         },
@@ -50,6 +52,7 @@ function editProduct(id) {
         type : "GET",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
+        error: function() {console.log("error")},
         success: function (response) {
             renderProduct(response);
         },
@@ -59,32 +62,31 @@ function editProduct(id) {
 function renderProduct(data){
     $("#taskId").val(data.id);
     $("#title").val(data.title);
-    $("#description").val(data.description);
+    $("#description").val(data.description)
 }
 
 function clearData(){
     $("#taskId").val("");
     $("#title").val("");
-    $("#description").val("");
+    $("#description").val("")
 }
 
 function saveProduct() {
     let id =  $("#taskId").val();
-    let title =  $("#title").val();
-    let description =  $("#description").val();
-
+    let data = {
+        id: id,
+        title: $("#title").val(),
+        description: $("#description").val()
+    };
     $.ajax({
-        url: "https://60b7561317d1dc0017b89b78.mockapi.io/tasks",
-        type: "POST",
+        url : `https://60b7561317d1dc0017b89b78.mockapi.io/tasks`,
+        type : "POST",
         dataType: "json",
-        data: { id: id, title: title, description: description },
+        data: data,
         contentType: "application/json; charset=utf-8",
-        error: function() {
-            console.log("error");
-        },
+        error: function() {console.log("error")},
         success: function (response) {
             getData(response);
-            console.log(response);
         },
     })
 }
