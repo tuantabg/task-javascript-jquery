@@ -3,6 +3,7 @@ $(document).ready(function() {
 });
 
 function getData() {
+    clearData();
     $.ajax({
         url: `https://60b7561317d1dc0017b89b78.mockapi.io/tasks`,
         type: "GET",
@@ -68,36 +69,20 @@ function clearData(){
 }
 
 function saveProduct() {
-    let taskId =  $("#taskId").val();
+    let id =  $("#taskId").val();
     let data = {
-        id : taskId,
-        title : $("#title").val(),
-        description : $("#description").val(),
-    };
-    let url = taskId ? `https://60b7561317d1dc0017b89b78.mockapi.io/tasks/${id}`
-                     : `https://60b7561317d1dc0017b89b78.mockapi.io/tasks`;
-    let type = taskId ? "PUT" : "POST";
-    if (taskId){
-        $.ajax({
-            url: url,
-            type: type,
-            data: data,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                getData(response);
-            }
-        })
-    }else {
-        $.ajax({
-            url: url,
-            type: type,
-            data: data,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                getData(response);
-            }
-        })
+        id: id,
+        title: $("#title").val(),
+        description: $("#description").val(),
     }
+    $.ajax({
+        url: "https://60b7561317d1dc0017b89b78.mockapi.io/tasks",
+        type: "POST",
+        data: data,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+            getData();
+        },
+    })
 }

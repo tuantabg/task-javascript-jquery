@@ -26,7 +26,8 @@
                                     <label for="description">Description</label>
                                     <input type="text" name="description" class="form-control" id="description">
                                 </div>
-                                <button type="button" class="btn btn-primary" id="saveProduct">Submit</button>
+                                <input type="hidden" name="taskId" class="form-control" id="taskId">
+                                <button type="button" onclick="saveProduct()" class="btn btn-primary">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -51,7 +52,6 @@
             </div>
         </div>
     </div>
-    <input type="hidden" name="taskId" class="form-control" id="taskId">
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
