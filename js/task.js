@@ -70,19 +70,21 @@ function clearData(){
 
 function saveProduct() {
     let id =  $("#taskId").val();
-    let data = {
-        id: id,
-        title: $("#title").val(),
-        description: $("#description").val(),
-    }
+    let title =  $("#title").val();
+    let description =  $("#description").val();
+
     $.ajax({
         url: "https://60b7561317d1dc0017b89b78.mockapi.io/tasks",
         type: "POST",
-        data: data,
+        data: { id: id, title: title, description: description },
         dataType: "json",
         contentType: "application/json; charset=utf-8",
+        error: function() {
+            console.log("error");
+        },
         success: function (response) {
-            getData();
+            getData(response);
+            console.log(response);
         },
     })
 }
