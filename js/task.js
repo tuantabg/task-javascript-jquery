@@ -78,15 +78,28 @@ function saveProduct() {
         title: $("#title").val(),
         description: $("#description").val()
     };
-    $.ajax({
-        url : `https://60b7561317d1dc0017b89b78.mockapi.io/tasks`,
-        type : "POST",
-        dataType: "json",
-        data: data,
-        contentType: "application/json; charset=utf-8",
-        error: function() {console.log("error")},
-        success: function (response) {
-            getData(response);
-        },
-    })
+    let url = id ? `https://60b7561317d1dc0017b89b78.mockapi.io/tasks/${id}`
+                 : `https://60b7561317d1dc0017b89b78.mockapi.io/tasks`;
+    let type = id ? "PUT" : "POST";
+    if (id){
+        $.ajax({
+            url : url,
+            type : type,
+            data: data,
+            error: function() {console.log("error")},
+            success: function (response) {
+                getData(response);
+            },
+        })
+    }else {
+        $.ajax({
+            url : url,
+            type : type,
+            data: data,
+            error: function() {console.log("error")},
+            success: function (response) {
+                getData(response);
+            },
+        })
+    }
 }
