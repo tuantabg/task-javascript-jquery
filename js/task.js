@@ -4,9 +4,10 @@ $(document).ready(function() {
 
 function getData() {
     $.ajax({
-        url: "https://60b7561317d1dc0017b89b78.mockapi.io/tasks",
+        url: `https://60b7561317d1dc0017b89b78.mockapi.io/tasks`,
         type: "GET",
         dataType: "json",
+        contentType: "application/json; charset=utf-8",
         success: function (response) {
             renderData(response)
         }
@@ -35,6 +36,7 @@ function deleteProduct(id) {
         url : `https://60b7561317d1dc0017b89b78.mockapi.io/tasks/${id}`,
         type : "DELETE",
         dataType: "json",
+        contentType: "application/json; charset=utf-8",
         success: function () {
             getData();
         },
@@ -44,10 +46,58 @@ function deleteProduct(id) {
 function editProduct(id) {
     $.ajax({
         url : `https://60b7561317d1dc0017b89b78.mockapi.io/tasks/${id}`,
-        type : "POST",
+        type : "GET",
         dataType: "json",
-        success: function () {
-            getData();
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+            renderProduct(response);
         },
     })
+}
+
+function renderProduct(data){
+    $("#taskId").val(data.id);
+    $("#title").val(data.title);
+    $("#description").val(data.description);
+}
+
+function clearData(){
+    $("#taskId").val("");
+    $("#title").val("");
+    $("#description").val("");
+}
+
+function saveProduct() {
+    let taskId =  $("#taskId").val();
+    let data = {
+        id : taskId,
+        title : $("#title").val(),
+        description : $("#description").val(),
+    };
+    let url = taskId ? `https://60b7561317d1dc0017b89b78.mockapi.io/tasks/${id}`
+                     : `https://60b7561317d1dc0017b89b78.mockapi.io/tasks`;
+    let type = taskId ? "PUT" : "POST";
+    if (taskId){
+        $.ajax({
+            url: url,
+            type: type,
+            data: data,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                getData(response);
+            }
+        })
+    }else {
+        $.ajax({
+            url: url,
+            type: type,
+            data: data,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                getData(response);
+            }
+        })
+    }
 }
