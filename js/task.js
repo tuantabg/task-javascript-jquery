@@ -76,8 +76,8 @@ function saveProduct() {
     $.ajax({
         url: "https://60b7561317d1dc0017b89b78.mockapi.io/tasks",
         type: "POST",
-        data: { id: id, title: title, description: description },
         dataType: "json",
+        data: { id: id, title: title, description: description },
         contentType: "application/json; charset=utf-8",
         error: function() {
             console.log("error");
