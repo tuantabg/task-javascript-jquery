@@ -1,9 +1,18 @@
+$(document)
+    .ajaxStart(function () {
+        $("#loading").show();
+    })
+    .ajaxStop(function () {
+        $("#loading").hide();
+    });
+
 $(document).ready(function() {
     getData();
 });
 
 function getData() {
     clearData();
+    $("#title_form").text("Create Form");
     $.ajax({
         url: `https://60b7561317d1dc0017b89b78.mockapi.io/tasks`,
         type: "GET",
@@ -47,6 +56,11 @@ function deleteProduct(id) {
 }
 
 function editProduct(id) {
+    if (id) {
+        $("#title_form").text("Edit Form");
+    }else {
+        $("#title_form").text("Create Form");
+    }
     $.ajax({
         url : `https://60b7561317d1dc0017b89b78.mockapi.io/tasks/${id}`,
         type : "GET",
