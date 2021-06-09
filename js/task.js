@@ -35,7 +35,7 @@ function renderData(data) {
                 <td>${item.description}</td>
                 <td>
                     <button type="button" onclick="editProduct(${item.id})" class="btn btn-primary">Edit</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteProduct(${item.id})">Delete</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteProduct(${item.id})" data-toggle="modal" data-target="#messageModal">Delete</button>
                 </td>
             </tr>
         `)
@@ -43,16 +43,34 @@ function renderData(data) {
 }
 
 function deleteProduct(id) {
+    $("#modal").append(`
+        <div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h3>Bạn có chắc chắn xóa ?</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="onDelete(${id})" data-dismiss="modal">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `)
+}
+
+function onDelete(id) {
     $.ajax({
         url : `https://60b7561317d1dc0017b89b78.mockapi.io/tasks/${id}`,
         type : "DELETE",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         error: function() {console.log("error")},
-        success: function () {
-            getData();
+        success: function (response) {
+            getData(response);
         },
-    })
+    });
 }
 
 function editProduct(id) {
